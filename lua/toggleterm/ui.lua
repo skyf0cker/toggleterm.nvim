@@ -170,6 +170,7 @@ end
 function M.set_origin_window()
   local current_win = api.nvim_get_current_win()
   local win_cfg = api.nvim_win_get_config(current_win)
+  print(current_win, vim.inspect(win_cfg))
   if win_cfg.relative ~= "" then
     local wins = api.nvim_list_wins()
     print("wins", wins)
