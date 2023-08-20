@@ -172,6 +172,7 @@ function M.set_origin_window()
   local win_cfg = api.nvim_win_get_config(current_win)
   if win_cfg.relative ~= "" then
     local wins = api.nvim_list_wins()
+    print("wins", wins)
     local reached = false
     for i = #wins, 1, -1 do
       if not reached and wins[i] ~= current_win then goto continue end
@@ -182,6 +183,7 @@ function M.set_origin_window()
 
       if reached then
         current_win = wins[i]
+        print("current_win", current_win)
         break
       end
       ::continue::
