@@ -167,7 +167,28 @@ function M.delete_buf(term)
   end
 end
 
-function M.set_origin_window() origin_window = api.nvim_get_current_win() end
+function M.set_origin_window()
+  local current_win = api.nvim_get_current_win()
+  local win_cfg = api.nvim_win_get_config(current_win)
+  if win_cfg.relative ~= "" then
+    local wins = api.nvim_list_wins()
+    local reached = false
+    for i = #wins, 1, -1 do
+      if not reached and wins[i] ~= current_win then goto continue end
+      if wins[i] == current_win then
+        reached = true
+        goto continue
+      end
+
+      if reached then
+        current_win = wins[i]
+        break
+      end
+      ::continue::
+    end
+  end
+  origin_window = current_win
+end
 
 function M.get_origin_window() return origin_window end
 
